@@ -5,6 +5,7 @@ from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
 from sarscov2_gatech_community_survey.utils import flash
 from ..api.views import add_consent
+import os
 
 blueprint = Blueprint("manage", __name__, url_prefix="/manage/", static_folder="../static")
 

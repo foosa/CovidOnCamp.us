@@ -27,7 +27,7 @@ class Role(SurrogatePK, Model):
     """A role for a user."""
 
     __tablename__ = "roles"
-    name = Column(db.String(80), unique=True, nullable=False)
+    name = Column(db.String(80), unique=False, nullable=False)
     user_id = reference_col("users", nullable=True)
     user = relationship("User", backref="roles")
 
@@ -56,7 +56,7 @@ class Results(SurrogatePK, Model):
 
     def __repr__(self):
         """Represent instance as a unique string."""
-        return f"<USerID({self.user_id})>"
+        return f"<Result({self.result_id})>"
 
 class Consent(SurrogatePK, Model):
     """Consent data"""
