@@ -1,0 +1,127 @@
+{% extends "layout.html" %}
+{#{% from 'bootstrap/form.html' import render_form %}#}
+
+{%  block header %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.4/css/intlTelInput.css">
+{%  endblock %}
+
+
+{% block content %}
+<div class="container">
+  <div class="form-wrapper">
+
+    <h3>Update user information</h3>
+
+    <form method="POST" action="/dashboard/settings">
+      {{ info.csrf_token }}
+
+      <fieldset class="first name">
+        {{ info.fname.label }}
+        {{ info.fname(value=current_user.first_name) }}
+      </fieldset>
+
+    <fieldset class="last name">
+        {{ info.lname.label }}
+        {{ info.lname(value=current_user.last_name) }}
+      </fieldset>
+
+    <fieldset class="phone number">
+        {{ info.phone.label }}
+        {{ info.phone(value=current_user.phone) }}
+      </fieldset>
+
+      <fieldset class="email" disabled="disabled">
+        {{ info.email.label }}
+        {{ info.email(value=current_user.email) }}
+        {% if info.email.errors %}
+          <ul class="errors">
+            {% for error in info.email.errors %}
+              <li>{{ error }}</li>{% endfor %}
+          </ul>
+        {% endif %}
+      </fieldset>
+
+
+      <div class="submit-button">
+        {{ info.submit_info }}
+      </div>
+
+    </form>
+
+  </div>
+
+    <div class="form-wrapper">
+    {% for message in get_flashed_messages() %}
+      <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+      </div>
+    {% endfor %}
+
+    <h3>Update password</h3>
+
+    <form method="POST" action="/dashboard/settings">
+      {{ pwd_update.csrf_token }}
+      <fieldset class="password">
+        {{ pwd_update.oldpwd.label }}
+        {{ pwd_update.oldpwd }}
+        {% if pwd_update.oldpwd.errors %}
+          <ul class="errors">
+            {% for error in pwd_update.oldpwd.errors %}
+              <li>{{ error }}</li>{% endfor %}
+          </ul>
+        {% endif %}
+      </fieldset>
+      <fieldset class="newpwd">
+        {{ pwd_update.newpwd.label }}
+        {{ pwd_update.newpwd }}
+        {% if pwd_update.newpwd.errors %}
+          <ul class="errors">
+            {% for error in pwd_update.newpwd.errors %}
+              <li>{{ error }}</li>{% endfor %}
+          </ul>
+        {% endif %}
+      </fieldset>
+
+      <fieldset class="confirm">
+        {{ pwd_update.confirm.label }}
+        {{ pwd_update.confirm }}
+        {% if pwd_update.confirm.errors %}
+          <ul class="errors">
+            {% for error in pwd_update.confirm.errors %}
+              <li>{{ error }}</li>{% endfor %}
+          </ul>
+        {% endif %}
+      </fieldset>
+
+
+      <div class="submit-button">
+        {{ pwd_update.submit_pwd }}
+      </div>
+
+    </form>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block js %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.4/js/intlTelInput.min.js"></script>
+    {{ super() }}
+    <script>
+    var wtf_phone_field = document.getElementById('phone');
+    wtf_phone_field.style.position = 'absolute';
+    wtf_phone_field.style.top = '-9999px';
+    wtf_phone_field.style.left = '-9999px';
+    wtf_phone_field.parentElement.insertAdjacentHTML('beforeend', '<div><input type="tel" id="_phone"></div>');
+    var fancy_phone_field = document.getElementById('_phone');
+    var fancy_phone_iti = window.intlTelInput(fancy_phone_field, {
+        separateDialCode: true,
+        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.4/js/utils.js",
+    });
+    fancy_phone_iti.setNumber(wtf_phone_field.value);
+    fancy_phone_field.addEventListener('blur', function() {
+        wtf_phone_field.value = fancy_phone_iti.getNumber();
+    });
+</script>
+{% endblock %}

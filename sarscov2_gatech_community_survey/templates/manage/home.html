@@ -1,0 +1,60 @@
+
+{% extends "layout.html" %}
+{% block content %}
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron">
+
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-4">
+      <h2><i class="fa fa-upload"></i> Step 1: Upload data</h2>
+      <p>Upload new data sheets</p>
+        <form action="{{ url_for('manage.upload') }}" method=POST enctype=multipart/form-data>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <div>
+            <input type="radio" id="consent"
+             name="kind" value="consent" selected>
+            <label for="consent">Consent file</label>
+
+            <input type="radio" id="results"
+             name="kind" value="results">
+            <label for="results">Results file</label>
+
+        </div>
+        <input type=file name="file" class=" form-control">
+        <input type=submit value="Upload &raquo;" class="btn btn-outline-secondary">
+    </form>
+    </div>
+    <div class="col-lg-4">
+      <h2><i class="fa fa-file"></i> Step 2: Update consent data</h2>
+      <p>Select the data file to use</p>
+    <form action="{{ url_for('manage.update_consents') }}" method=POST>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <select class="form-control" name="consentfile">
+            {% for f in consent %}
+                <option value="{{ f }}">{{ f }}</option>
+            {% endfor %}
+        </select>
+        <input type=submit value="Update consents &raquo;" class="btn btn-outline-secondary">
+    </form>
+{#      <p><a href="{{ url_for('manage.update_consents') }}" class="btn btn-outline-secondary">Update participant consents &raquo;</a></p>#}
+   </div>
+    <div class="col-lg-4">
+      <h2><i class="fa fa-flask"></i> Step 3: Update results data</h2>
+      <p>Select the data file to use</p>
+        <form action="{{ url_for('manage.update_results') }}" method=POST>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <select class="form-control" name="resultsfile">
+            {% for f in results %}
+                <option value="{{ f }}">{{ f }}</option>
+            {% endfor %}
+        </select>
+        <input type=submit value="Update results &raquo;" class="btn btn-outline-secondary">
+    </form>
+{#      <p><a href="{{ url_for('manage.update_results') }}" class="btn btn-outline-secondary">Update participant results &raquo;</a></p>#}
+    </div>
+  </div><!-- /.row -->
+</div>
+{% endblock %}
+

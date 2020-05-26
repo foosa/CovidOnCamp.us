@@ -1,0 +1,124 @@
+
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="row justify-content-md-center">
+  <video controls class="embed-responsive-item" src="/static/explainer.mp4" allowfullscreen width="400px"></video>
+</div>
+
+<div class="container">
+    <h1 class="mt-5">FREQUENTLY ASKED QUESTIONS relating to SARS-CoV-2 Testing on Campus</h1>
+    <div class="accordion" id="accordionExample">
+        <div class="card">
+    <div class="card-header" id="heading8">
+      <h2 class="mb-0">
+        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapse8" aria-expanded="true" aria-controls="collapse8">
+          Who do I ask for more information?
+        </button>
+      </h2>
+    </div>
+    <div id="collapse8" class="collapse show" aria-labelledby="heading8" data-parent="#accordionExample">
+      <div class="card-body">
+Please email Professor Gibson: greg.gibson@biology.gatech.edu    </div>
+  </div>
+</div>
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h2 class="mb-0">
+        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+          Do I have to answer all of the questions on the Qualtrics Survey?
+        </button>
+      </h2>
+    </div>
+
+    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+      <div class="card-body">
+        No, you may leave certain questions unanswered.  However, the more information you provide, the better we can help to protect your fellow students and staff.
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingTwo">
+      <h2 class="mb-0">
+        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Who has access to the answers that I provide?
+        </button>
+      </h2>
+    </div>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+      <div class="card-body">
+        Only a handful of individuals will ever be able to link the answers to your GT-ID or name.  These are Professor Gibson, who is responsible for the study, and his study manager.  They would be able to connect IDs to names, but they will be stored in different secure files.
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingThree">
+      <h2 class="mb-0">
+        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          If I test positive, who is informed?
+        </button>
+      </h2>
+    </div>
+    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+      <div class="card-body">
+        Everyone in the study each day will receive an email inviting them to view their personal results.  Once they do so, they then assent to linking their positive result to the Co-Epi app that is being used for electronic contact tracing.  This is automated and involves transfer of barcodes, not names.  By Law, your GT-ID will also be provided to STAMPS Student Health Center, which is obliged to then report the result and your name to the State of Georgia
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingThree">
+      <h2 class="mb-0">
+        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
+          Why do you want to know where I work or live?
+        </button>
+      </h2>
+    </div>
+    <div id="collapse4" class="collapse" aria-labelledby="heading4" data-parent="#accordionExample">
+      <div class="card-body">
+Surveillance testing is designed to help slow the rate of transmission of the virus.  If we know where you live and work, we can track whether multiple infections occur in the same workplace or residence, identifying a hotspot.  These places will then be isolated (closing offices/labs/classrooms; requiring residents to self-quarantine) to prevent further spread.
+      </div>
+    </div>
+  </div>  <div class="card">
+    <div class="card-header" id="heading5">
+      <h2 class="mb-0">
+        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
+          What will happen to me if I test positive?
+        </button>
+      </h2>
+    </div>
+    <div id="collapse5" class="collapse" aria-labelledby="heading5" data-parent="#accordionExample">
+      <div class="card-body">
+In most cases you will be asked to report to STAMPS to ensure you get immediate and appropriate medical care.  Even if you do not have any symptoms, we will ask you to move into temporary quarantine housing on campus (or to move off campus) for at least 5 days.  We will ask you to help us trace your recent movements and contact friends and colleagues who may have been exposed by close contact with you, so that they can also be tested.      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="heading6">
+      <h2 class="mb-0">
+        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapse6" aria-expanded="false" aria-controls="collapse6">
+          If I previously tested positive either by PCR or a serological test, do I need to participate?
+        </button>
+      </h2>
+    </div>
+    <div id="collapse6" class="collapse" aria-labelledby="heading6" data-parent="#accordionExample">
+      <div class="card-body">
+In all likelihood, previous infection protects you against reinfection for at least several months.  However, you should remain vigilant and continue to practice the same social distancing, mask wearing, and other cautious behaviors as others.  We do not want to have two tiers of people.      </div>
+    </div>
+  </div>
+    <div class="card">
+    <div class="card-header" id="heading7">
+      <h2 class="mb-0">
+        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapse7" aria-expanded="false" aria-controls="collapse7">
+          For how long do I need to isolate if I test positive?
+        </button>
+      </h2>
+    </div>
+    <div id="collapse7" class="collapse" aria-labelledby="heading7" data-parent="#accordionExample">
+      <div class="card-body">
+So long as you do not show any symptoms, 1 week should be sufficient, but we will ask that you are retested and have two negative results before returning to more normal life.  If you do become sick with COVID-19, your physicians will decide the best course of action.      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+

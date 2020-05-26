@@ -1,0 +1,49 @@
+
+{% extends "layout.html" %}
+{%  block header %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.4/css/intlTelInput.css">
+{%  endblock %}
+{% block content %}
+<div class="container-narrow">
+  <h1 class="mt-5">Password reset</h1>
+    <br/>
+    <form id="registerForm" class="form form-register" method="POST" action="" role="form">
+           {{ reset.csrf_token }}
+          <div class="form-group">
+                {{reset.code.label}}
+                {{reset.code(placeholder="Code", value=code, class="form-control")}}
+        </div>
+        <div class="form-group">
+                {{reset.password.label}}
+                {{reset.password(placeholder="Password", class_="form-control")}}
+        </div>
+        <div class="form-group">
+                {{reset.confirm.label}}
+                {{reset.confirm(placeholder="Password (again)", class_="form-control")}}
+            </div>
+            <p><input class="btn btn-primary" type="submit" value="Reset"></p>
+    </form>
+    <p><em>Already registered?</em> Click <a href="/">here</a> to login.</p>
+</div>
+{% endblock %}
+
+{% block js %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.4/js/intlTelInput.min.js"></script>
+    {{ super() }}
+    <script>
+    var wtf_phone_field = document.getElementById('phone');
+    wtf_phone_field.style.position = 'absolute';
+    wtf_phone_field.style.top = '-9999px';
+    wtf_phone_field.style.left = '-9999px';
+    wtf_phone_field.parentElement.insertAdjacentHTML('beforeend', '<div><input type="tel" id="_phone"></div>');
+    var fancy_phone_field = document.getElementById('_phone');
+    var fancy_phone_iti = window.intlTelInput(fancy_phone_field, {
+        separateDialCode: true,
+        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.4/js/utils.js",
+    });
+    fancy_phone_iti.setNumber(wtf_phone_field.value);
+    fancy_phone_field.addEventListener('blur', function() {
+        wtf_phone_field.value = fancy_phone_iti.getNumber();
+    });
+</script>
+{% endblock %}

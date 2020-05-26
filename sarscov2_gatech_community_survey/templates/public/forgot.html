@@ -1,0 +1,29 @@
+
+{% extends "layout.html" %}
+{%  block header %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.4/css/intlTelInput.css">
+{%  endblock %}
+{% block content %}
+<div class="container-narrow">
+  <h1 class="mt-5">Forgot password</h1>
+    <br/>
+    <form id="forgot" class="form form-forgot" method="POST" action="" role="form">
+           {{ forgot.csrf_token }}
+        <div class="form-group">
+                {{forgot.username.label}}
+                {{forgot.username(placeholder="Username", class_="form-control")}}
+        </div>
+        <p>OR</p>
+        <div class="form-group">
+                {{forgot.email.label}}
+                {{forgot.email(placeholder="Email", class_="form-control")}}
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <p><input class="btn btn-primary" type="submit" value="Reset password"></p>
+    </form>
+    <p><em>Already registered?</em> Click <a href="/">here</a> to login.</p>
+</div>
+{% endblock %}
+
+{% block js %}
+{% endblock %}

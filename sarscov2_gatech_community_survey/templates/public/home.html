@@ -1,0 +1,75 @@
+
+{% extends "layout.html" %}
+ {% block header %}
+<link
+  href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css"
+  rel="stylesheet"  type='text/css'>
+{% endblock %}
+{% block content %}
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron">
+    <div class="container">
+
+      <h1 class="display-5">Welcome to Georgia Tech COVID On Campus Survey</h1>
+       <p>Watch our short introductory video and learn more</p>
+      <p><a href="{{ url_for('public.about') }}" class="btn btn-primary btn-large">About &raquo;</a></p>
+    </div>
+</div><!-- /.jumbotron -->
+
+
+<div class="container" id="info">
+  <div class="row display-flex">
+    <div class="col-lg-4">
+      <h2><i class="fa fa-medkit"></i> COVID-19 screening</h2>
+        <p>For more information on campus policies
+                regarding SARS-CoV-2 testing, please
+                follow this link.  It includes information
+                about informed consent, a FAQ, and
+                an animated video explaining the process.
+                 </p>
+        <p><a href="{{ url_for('public.about') }}" class="btn btn-outline-secondary">More info</a></p>
+    </div>
+    <div class="col-lg-4">
+      <h2><i class="fa fa-magic"></i> Testing results</h2>
+                   <style type="text/css">
+.tg  {border-collapse:collapse;border-color:#ccc;border-spacing:0;border-style:solid;border-width:1px; width:100%}
+.tg td{background-color:#fff;border-color:#ccc;border-style:solid;border-width:0px;color:#333;
+  font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;word-break:normal}
+.tg th{background-color:#f0f0f0;border-color:#ccc;border-style:solid;border-width:0px;color:#333;
+  font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-y6me{background-color:#212529;color:#efefef;text-align:left;vertical-align:top}
+.tg .tg-0lax{text-align:center;vertical-align:top; width:30%}
+</style>
+<table class="tg">
+<tbody>
+  <tr>
+    <td class="tg-y6me">Total tests administered</td>
+    <td class="tg-0lax">{{ total }}</td>
+  </tr>
+  <tr>
+    <td class="tg-y6me">Total positive tests</td>
+    <td class="tg-0lax">{{ positive }} ({{ "%.1f" | format(positive/total*100) }}%)</td>
+  </tr>
+  <tr>
+    <td class="tg-y6me">Total negative tests</td>
+    <td class="tg-0lax">{{ negative }} ({{ "%.1f" | format(negative/total*100) }}%)</td>
+  </tr>
+</tbody>
+</table>
+        <p>Please click below to access summary results
+            which will be updated daily.</p>
+{#        <p><a href="{{ url_for('public.dashboard') }}" class="btn btn-outline-secondary">Explore the data</a></p>#}
+        <p><a href="#" class="btn btn-outline-secondary">Explore the data</a></p>
+    </div>
+    <div class="col-lg-4">
+      <h2><i class="fa fa-qrcode"></i> Four simple steps</h2>
+      <ol>
+          <li><a href="{{ url_for('public.register') }}">Join</a> the GT COVID On Campus study</li>
+          <li>Read and sign our informed consent</li>
+          <li>Schedule a visit to our sample collection site</li>
+          <li>We'll send you an email when your results are in</li>
+      </ol>
+      <p><a href="{{ url_for('public.register') }}" class="btn btn-outline-secondary">Join the study</a></p>
+    </div>
+{% endblock %}
+
