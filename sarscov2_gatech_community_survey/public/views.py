@@ -122,7 +122,7 @@ def register():
         flash_errors(form)
     return render_template("public/register.html", form=form)
 
-@blueprint.route("/reset/", methods=["GET", "POST"])
+@blueprint.route("/forgot/", methods=["GET", "POST"])
 def forgot():
     """Register new user_bp."""
     user = ''
