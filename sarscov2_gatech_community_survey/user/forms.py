@@ -2,7 +2,7 @@
 """User forms."""
 from flask_wtf import FlaskForm
 from wtforms import PasswordField, StringField
-from wtforms.validators import DataRequired, Email, EqualTo, Length
+from wtforms.validators import DataRequired, Email, EqualTo, Length, Optional, ValidationError
 import phonenumbers
 from .models import User
 
@@ -10,9 +10,6 @@ from .models import User
 class RegisterForm(FlaskForm):
     """Register form."""
 
-    username = StringField(
-        "Username", validators=[DataRequired(), Length(min=3, max=25)]
-    )
     fname = StringField(
         "First name", validators=[DataRequired(), Length(min=3, max=25)]
     )
@@ -24,6 +21,9 @@ class RegisterForm(FlaskForm):
     )
     email = StringField(
         "Email", validators=[DataRequired(), Email(), Length(min=6, max=40)]
+    )
+    gtid = StringField(
+        "GTID", validators=[DataRequired(), Length(min=9, max=9)]
     )
     password = PasswordField(
         "Password", validators=[DataRequired(), Length(min=6, max=40)]
@@ -43,13 +43,13 @@ class RegisterForm(FlaskForm):
         initial_validation = super(RegisterForm, self).validate()
         if not initial_validation:
             return False
-        user = User.query.filter_by(username=self.username.data).first()
-        if user:
-            self.username.errors.append("Username already registered")
-            return False
         user = User.query.filter_by(email=self.email.data).first()
         if user:
             self.email.errors.append("Email already registered")
+            return False
+        user = User.query.filter_by(email=self.gtid.data).first()
+        if user:
+            self.gtid.errors.append("GTID already registered")
             return False
         try:
             p = phonenumbers.parse(self.phone.data)

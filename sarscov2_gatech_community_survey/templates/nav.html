@@ -24,6 +24,9 @@
     <ul class="navbar-nav my-auto">
       {% if current_user and current_user.is_authenticated and current_user.is_admin%}
       <li class="nav-item active">
+        <a class="btn btn-sm btn-outline-secondary mr-2" href="{{ url_for('manage.sample') }}">Collect samples</a>
+      </li>
+      <li class="nav-item active">
         <a class="btn btn-sm btn-outline-secondary mr-2" href="{{ url_for('manage.home') }}">Manage data</a>
       </li>
       <li class="nav-item active">
@@ -46,7 +49,7 @@
     <form class="form-inline" id="loginForm" method="POST" action="/" role="login">
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
       <div class="input-group mb-2 mr-sm-2">
-        {{ form.username(placeholder="Username", class_="form-control mr-sm-1 my-auto") }} {{ form.password(placeholder="Password",
+        {{ form.email(placeholder="Email", class_="form-control mr-sm-1 my-auto") }} {{ form.password(placeholder="Password",
         class_="form-control mr-sm-1 my-auto") }}
         <button class="btn btn-light btn-primary m-auto" type="submit">Login</button>
       </div>

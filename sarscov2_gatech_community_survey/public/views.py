@@ -62,6 +62,7 @@ def home():
     form = LoginForm(request.form)
     current_app.logger.info("Hello from the home page!")
     total = Results.query.filter(Results.result.isnot(None)).count()
+    if total == 0: total = 1
     positive = Results.query.filter_by(result=True).count()
     negative = Results.query.filter_by(result=False).count()
     # Handle logging in
@@ -97,17 +98,23 @@ def register():
         return redirect(url_for("user_bp.dashboard"))
     form = RegisterForm(request.form)
     if form.validate_on_submit():
+        import random
+        import string
+        lettersAndDigits = string.ascii_letters + string.digits
+        rand = random.SystemRandom()
         User.create(
-            username=form.username.data,
+            username=form.email.data,
             email=form.email.data,
             password=form.password.data,
             phone=form.phone.data,
             active=True,
             first_name=form.fname.data,
-            last_name=form.lname.data
+            last_name=form.lname.data,
+            gtid=form.gtid.data,
+            sample_id=''.join((rand.choice(lettersAndDigits) for i in range(16)))
         )
         flash("Thank you for registering.", "success")
-        send_welcome(form.email.data, form.fname.data, form.lname.data, form.username.data)
+        send_welcome(form.email.data, form.fname.data, form.lname.data)
         user = User.query.filter_by(email=form.email.data).first()
         login_user(user)
         return redirect(url_for("user_bp.dashboard"))
@@ -115,20 +122,15 @@ def register():
         flash_errors(form)
     return render_template("public/register.html", form=form)
 
-@blueprint.route("/forgot/", methods=["GET", "POST"])
+@blueprint.route("/reset/", methods=["GET", "POST"])
 def forgot():
     """Register new user_bp."""
-
+    user = ''
     if current_user and current_user.is_authenticated:
-        return redirect(url_for("user_bp.dashboard"))
+        user = current_user.username
     form = ForgotForm(request.form)
     if form.validate_on_submit():
-        if form.username.data:
-            user = User.query.filter_by(username=form.username.data).first()
-            if user:
-                user.update(recovery_key=get_random_alphaNumeric_string())
-                reset_pwd(user.email, user.username, user.recovery_key)
-        elif form.email.data:
+        if form.email.data:
             user = User.query.filter_by(email=form.email.data).first()
             if user:
                 user.update(recovery_key=get_random_alphaNumeric_string())
@@ -136,7 +138,7 @@ def forgot():
         return redirect(url_for("public.home"))
     else:
         flash_errors(form)
-    return render_template("public/forgot.html", forgot=form)
+    return render_template("public/forgot.html", forgot=form, un = user)
 
 @blueprint.route("/reset/", methods=["GET", "POST"])
 def reset():

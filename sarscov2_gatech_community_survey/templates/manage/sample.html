@@ -1,0 +1,27 @@
+
+{% extends "layout.html" %}
+{% block content %}
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron">
+
+</div>
+<div class="container">
+  <div class="row justify-content-md-center">
+    <div class="col-lg-4">
+      <h2>Scan barcode</h2>
+      <p>Scan or enter the sample ID</p>
+    <form id="barcodeid" class="form form-barcode" method="POST" action="" role="form">
+           {{ form.csrf_token }}
+          <div class="form-group">
+                {{form.barcode.label}}
+                {{form.barcode(placeholder="xxxxxxxxxxxxxxxx_#", class="form-control")}}
+        </div>
+
+            <p><input class="btn btn-dark" type="submit" value="Next &raquo;"></p>
+    </form>
+{#      <p><a href="{{ url_for('manage.update_consents') }}" class="btn btn-outline-secondary">Update participant consents &raquo;</a></p>#}
+   </div>
+  </div><!-- /.row -->
+</div>
+{% endblock %}
+

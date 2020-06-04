@@ -6,6 +6,8 @@ from werkzeug.utils import secure_filename
 from sarscov2_gatech_community_survey.utils import flash
 from ..api.views import add_consent
 import os
+from sarscov2_gatech_community_survey.manage.forms import barcodeForm, detailsForm
+from sarscov2_gatech_community_survey.user.models import User, Results, Consent, dt, roundSeconds, AuditLog
 
 blueprint = Blueprint("manage", __name__, url_prefix="/manage/", static_folder="../static")
 
@@ -83,6 +85,69 @@ def update_results():
             else:
                 flash(f"Updating consent data with: {request.form.get('resultsfile')}")
                 return redirect(url_for('manage.home'))
-        current_app.logger.info(os.listdir(os.path.join(current_app.config['UPLOAD_FOLDER'],'results')))
         return redirect(url_for('manage.home'))
+
+
+@blueprint.route('/sample', methods=['GET', 'POST'])
+@login_required
+def sample():
+    """Track a new samples"""
+    form = barcodeForm(request.form)
+    if form.validate_on_submit():
+        result = Results.query.filter_by(result_id=form.barcode.data).first()
+        if result:
+            return redirect(url_for('manage.details', barcode=form.barcode.data))
+    if current_user.is_admin:
+        return render_template("manage/sample.html",
+                               form=form)
+
+@blueprint.route('/details', methods=['GET', 'POST'])
+@login_required
+def details():
+    """List participant details"""
+    form = detailsForm(request.form)
+    barcode = request.args.get('barcode')
+    user = User.query.filter_by(sample_id=barcode.split("_")[0]).first()
+    consent_id = ''
+    consent = Consent.query.filter_by(user_id=user.id).first()
+    if consent and consent.consent_id != "No consent id available":
+        consent_id = consent.consent_id
+    if current_user.is_admin:
+        if form.validate_on_submit():
+            if form.consent_id.data != consent_id:
+                if consent:
+                    if consent.consent_id == "No consent id available" or consent.consent_id == None:
+                        consent.consent_id = form.consent_id.data
+                        consent.save()
+                    else:
+                        flash('You cannot replace an existing consent ID', 'danger')
+                        return redirect(url_for('manage.details', barcode=barcode))
+                else:
+                    Consent.create(
+                            user_id=user.id,
+                            consented=True,
+                            consent_id=form.consent_id.data,
+                            unverified=False
+                    )
+            if user.gtid != form.gtid.data:
+                user.gtid = form.gtid.data
+                user.save()
+            result = Results.query.filter_by(result_id=barcode).first()
+            result.result_text = "Sample received, awaiting processing"
+            result.result = None
+            result.updated_time = roundSeconds(dt.datetime.now())
+            result.save()
+            AuditLog.create(
+                    user_id=user.id,
+                    result_id=result.id,
+                    status="Specimen received"
+            )
+            flash('Added sample for processing', 'success')
+            return redirect(url_for('manage.sample'))
+        return render_template("manage/details.html",
+                               form=form,
+                               barcode=barcode,
+                               consent_id=consent_id,
+                               user=user)
+
 

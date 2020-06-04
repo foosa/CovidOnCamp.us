@@ -10,7 +10,7 @@ from sarscov2_gatech_community_survey.user.models import User
 class LoginForm(FlaskForm):
     """Login form."""
 
-    username = StringField("Username", validators=[DataRequired()])
+    email = StringField("Email", validators=[DataRequired()])
     password = PasswordField("Password", validators=[DataRequired()])
 
     def __init__(self, *args, **kwargs):
@@ -24,9 +24,9 @@ class LoginForm(FlaskForm):
         if not initial_validation:
             return False
 
-        self.user = User.query.filter_by(username=self.username.data).first()
+        self.user = User.query.filter_by(email=self.email.data).first()
         if not self.user:
-            self.username.errors.append("Unknown username")
+            self.email.errors.append("Unknown email")
             return False
 
         if not self.user.check_password(self.password.data):
@@ -42,9 +42,6 @@ class LoginForm(FlaskForm):
 class ForgotForm(FlaskForm):
     """Pass reset form"""
 
-    username = StringField(
-        "Username", validators=[Optional(), Length(min=3, max=25)]
-    )
     email = StringField(
         "Email", validators=[Optional(), Email(), Length(min=6, max=40)]
     )
@@ -59,8 +56,8 @@ class ForgotForm(FlaskForm):
         initial_validation = super(ForgotForm, self).validate()
         if not initial_validation:
             return False
-        user = User.query.filter_by(username=self.username.data).first()
-        if self.username.data != "" or self.email.data != "":
+        user = User.query.filter_by(email=self.email.data).first()
+        if self.email.data != "":
             return True
         else:
             return False

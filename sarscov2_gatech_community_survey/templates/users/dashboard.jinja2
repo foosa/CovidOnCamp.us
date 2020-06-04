@@ -63,15 +63,6 @@
                     </div>
             <p>Participant name: {{ '{} {}'.format(current_user.first_name, current_user.last_name) }}</p>
             {% if consent.consented %}
-
-            {% elif consent.unverified %}
-                <small id="consentHelp" class="form-text text-muted">Our staff will verify your consent during your first test, no need to submit more than once.</small>
-                <small id="retake" class="form-text text-muted">If you didn't receive an email from DocuSign with your copy of the signed consent form, <a target="_blank" href="https://powerforms.docusign.net/d1ce1898-d9eb-4bcd-97cf-27be91d11036?env=na3-eu1&acct=7554587e-5afc-4247-8977-071ef5c80e3b&Participant_UserName={{ '{} {}'.format(current_user.first_name, current_user.last_name) }}&Participant_Email={{ current_user.email }}">resubmit your consent here</a>.</small>
-            {% else %}
-                <a class="btn btn-primary active"
-                   href="/dashboard/sign">Sign the consent</a>
-                <small id="consentHelp" class="form-text text-muted">Our staff will verify your consent during your first test, no need to submit more than once.</small>
-            {% endif %}
             <div>
                     Directions:
                     <ol>
@@ -81,10 +72,38 @@
                         <small>You will present your Buzzcard along with the test barcode accessed from this page</small>
                     </ol>
                 </div>
+            {% elif consent.unverified %}
+                <div>
+                    Directions:
+                    <ol>
+                        <li>Schedule a test with the "Get tested" button</li>
+                        <li>Fill out the survey associated with your test</li>
+                        <li>On the day of your test, bring your Buzzcard and phone</li>
+                        <small>You will present your Buzzcard along with the test barcode accessed from this page</small>
+                    </ol>
+                </div>
+                <small id="consentHelp" class="form-text text-muted">Our staff will verify your consent during your first test, no need to submit more than once.</small>
+                <small id="retake" class="form-text text-muted">If you didn't receive an email from DocuSign with your copy of the signed consent form, <a target="_blank" href="https://powerforms.docusign.net/d1ce1898-d9eb-4bcd-97cf-27be91d11036?env=na3-eu1&acct=7554587e-5afc-4247-8977-071ef5c80e3b&Participant_UserName={{ '{} {}'.format(current_user.first_name, current_user.last_name) }}&Participant_Email={{ current_user.email }}">resubmit your consent here</a>.</small>
+            {% else %}
+                <a class="btn btn-primary active"
+                   href="/dashboard/sign">Sign the consent</a>
+                <small id="consentHelp" class="form-text text-muted">Our staff will verify your consent during your first test, no need to submit more than once.</small>
+                <div>
+                    Directions:
+                    <ol>
+                        <li><a href="/dashboard/sign">Sign the Consent</a> (you can <a href="/static/SARS-Cov2_Consent_form.pdf" target="_blank">read it here first</a> if you have not done so already)</li>
+                        <li>Schedule a test with the "Get tested" button</li>
+                        <li>Fill out the survey associated with your test</li>
+                        <li>On the day of your test, bring your Buzzcard and phone</li>
+                        <small>You will present your Buzzcard along with the test barcode accessed from this page</small>
+                    </ol>
+                </div>
+            {% endif %}
+
                 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
                 <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript"></script>
                 <input type=submit value="Get tested &raquo;" class="btn btn-success"
-                       onclick="Calendly.initPopupWidget({url: 'https://calendly.com/covidoncampus/sample-collection',
+                       onclick="Calendly.initPopupWidget({url: 'https://calendly.com/gt_sarscov2/sample-collection',
                                prefill: {name: '{{ current_user.first_name }}', email: '{{ current_user.email }}', customAnswers: {a1: '{{ resultId }}' } },
                                text: 'Schedule time for sample collection', color: '#00a2ff', textColor: '#ffffff', branding: false});window.opener.location.reload();onbeforeunload = fetchResults();return false;">
             </div>

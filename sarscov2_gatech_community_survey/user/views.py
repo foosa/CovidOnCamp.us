@@ -72,16 +72,18 @@ def settings():
     current_app.logger.error(info)
     if info.submit_info.data and info.validate_on_submit():
         user = current_user
+        current_app.logger.error(info.fname.data)
         user.first_name = info.fname.data
         user.last_name = info.lname.data
         user.save()
         return redirect(url_for('user_bp.settings'))
     if pwd.submit_pwd.data and pwd.validate_on_submit():
-        if not current_user.check_password(pwd.oldpwd.data):
+        if not current_user.check_password(pwd.oldpwd.value):
             flash('Current password is incorrect', 'danger')
-        user = current_user
-        user.set_password(pwd.newpwd.data)
-        user.save()  # Create new user
+        current_app.logger.error(pwd.newpwd.value)
+        current_user.set_password(pwd.newpwd.data)
+        current_user.save()  # update password
+        flash('Password updated', 'success')
         return redirect(url_for('user_bp.settings'))
     return render_template('users/settings.jinja2',
                            title='Update account settings.',

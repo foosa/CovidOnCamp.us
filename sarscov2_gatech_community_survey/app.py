@@ -39,7 +39,7 @@ class MyModelView(sqla.ModelView):
         if hasattr(model, 'password'):
             if is_created:
                 model.password = bcrypt.generate_password_hash(form.password.data)
-            if not login.current_user.check_password(model.password):
+            elif not login.current_user.check_password(form.password.data):
                 model.password = bcrypt.generate_password_hash(form.password.data)
             if type(model.password) != bytes:
                 model.password = bytes(model.password, 'utf-8')
@@ -80,6 +80,7 @@ def create_app(config_object="sarscov2_gatech_community_survey.settings"):
     admin_app.add_view(MyModelView(user.models.Results, db.session))
     admin_app.add_view(MyModelView(user.models.Consent, db.session))
     admin_app.add_view(MyModelView(user.models.Role, db.session))
+    admin_app.add_view(MyModelView(user.models.AuditLog, db.session))
     admin_app.add_view(fileadmin.FileAdmin(app.config['UPLOAD_FOLDER'], name='Files'))
     register_extensions(app)
     register_blueprints(app)

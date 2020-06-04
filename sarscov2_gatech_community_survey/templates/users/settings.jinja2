@@ -33,6 +33,7 @@
       <fieldset class="email" disabled="disabled">
         {{ info.email.label }}
         {{ info.email(value=current_user.email) }}
+
         {% if info.email.errors %}
           <ul class="errors">
             {% for error in info.email.errors %}
@@ -40,6 +41,7 @@
           </ul>
         {% endif %}
       </fieldset>
+    <small id="emailhelp">Email cannot be changed</small>
 
 
       <div class="submit-button">
@@ -57,49 +59,50 @@
         {{ message }}
       </div>
     {% endfor %}
-
-    <h3>Update password</h3>
-
-    <form method="POST" action="/dashboard/settings">
-      {{ pwd_update.csrf_token }}
-      <fieldset class="password">
-        {{ pwd_update.oldpwd.label }}
-        {{ pwd_update.oldpwd }}
-        {% if pwd_update.oldpwd.errors %}
-          <ul class="errors">
-            {% for error in pwd_update.oldpwd.errors %}
-              <li>{{ error }}</li>{% endfor %}
-          </ul>
-        {% endif %}
-      </fieldset>
-      <fieldset class="newpwd">
-        {{ pwd_update.newpwd.label }}
-        {{ pwd_update.newpwd }}
-        {% if pwd_update.newpwd.errors %}
-          <ul class="errors">
-            {% for error in pwd_update.newpwd.errors %}
-              <li>{{ error }}</li>{% endfor %}
-          </ul>
-        {% endif %}
-      </fieldset>
-
-      <fieldset class="confirm">
-        {{ pwd_update.confirm.label }}
-        {{ pwd_update.confirm }}
-        {% if pwd_update.confirm.errors %}
-          <ul class="errors">
-            {% for error in pwd_update.confirm.errors %}
-              <li>{{ error }}</li>{% endfor %}
-          </ul>
-        {% endif %}
-      </fieldset>
-
-
-      <div class="submit-button">
-        {{ pwd_update.submit_pwd }}
-      </div>
-
-    </form>
+        <div><a>To update your password please use the <a href="{{ url_for('public.forgot') }}">password reset page</a>
+        <br><small>This is to ensure only the authorized user can change passwords</small></p></div>
+{#    <h3>Update password</h3>#}
+{##}
+{#    <form method="POST" action="/dashboard/settings">#}
+{#      {{ pwd_update.csrf_token }}#}
+{#      <fieldset class="password">#}
+{#        {{ pwd_update.oldpwd.label }}#}
+{#        {{ pwd_update.oldpwd }}#}
+{#        {% if pwd_update.oldpwd.errors %}#}
+{#          <ul class="errors">#}
+{#            {% for error in pwd_update.oldpwd.errors %}#}
+{#              <li>{{ error }}</li>{% endfor %}#}
+{#          </ul>#}
+{#        {% endif %}#}
+{#      </fieldset>#}
+{#      <fieldset class="newpwd">#}
+{#        {{ pwd_update.newpwd.label }}#}
+{#        {{ pwd_update.newpwd }}#}
+{#        {% if pwd_update.newpwd.errors %}#}
+{#          <ul class="errors">#}
+{#            {% for error in pwd_update.newpwd.errors %}#}
+{#              <li>{{ error }}</li>{% endfor %}#}
+{#          </ul>#}
+{#        {% endif %}#}
+{#      </fieldset>#}
+{##}
+{#      <fieldset class="confirm">#}
+{#        {{ pwd_update.confirm.label }}#}
+{#        {{ pwd_update.confirm }}#}
+{#        {% if pwd_update.confirm.errors %}#}
+{#          <ul class="errors">#}
+{#            {% for error in pwd_update.confirm.errors %}#}
+{#              <li>{{ error }}</li>{% endfor %}#}
+{#          </ul>#}
+{#        {% endif %}#}
+{#      </fieldset>#}
+{##}
+{##}
+{#      <div class="submit-button">#}
+{#        {{ pwd_update.submit_pwd }}#}
+{#      </div>#}
+{##}
+{#    </form>#}
 
   </div>
 </div>

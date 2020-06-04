@@ -1,0 +1,44 @@
+
+{% extends "layout.html" %}
+{% block content %}
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron">
+
+</div>
+<div class="container">
+  <div class="row justify-content-md-center">
+    <div class="col-lg-8 centered">
+      <h2>Step 3: Confirm and add sample</h2>
+      <p>Final confirmation before adding</p>
+    <form id="details" class="form form-details" method="POST" action="" role="form">
+           {{ form.csrf_token }}
+          <div class="form-group" disabled="disabled">
+                {{form.barcode.label}}
+                {{form.barcode(placeholder="xxxxxxxxxxxxxxxx_#", value=barcode, class="form-control", disabled="disabled")}}
+          </div>
+          <div class="form-group" disabled="disabled">
+                {{form.consent_id.label}}
+                {{form.consent_id(placeholder="Consent_id", value=consent_id, class="form-control", disabled="disabled")}}
+          </div>
+          <div class="form-group" disabled="disabled">
+                {{form.fname.label}}
+                {{form.fname(value=user.first_name, class="form-control", disabled="disabled")}}
+          </div>
+          <div class="form-group" disabled="disabled">
+                {{form.lname.label}}
+                {{form.lname(value=user.last_name, class="form-control", disabled="disabled")}}
+          </div>
+          <div class="form-group" >
+                {{form.gtid.label}}
+                {{form.gtid(value=user.gtid, class="form-control", disabled="disabled")}}
+          </div>
+
+            <p><input class="btn btn-dark" type="submit" value="Add sample &raquo;"></p>
+    </form>
+{#      <p><a href="{{ url_for('manage.update_consents') }}" class="btn btn-outline-secondary">Update participant consents &raquo;</a></p>#}
+   </div>
+
+  </div><!-- /.row -->
+</div>
+{% endblock %}
+

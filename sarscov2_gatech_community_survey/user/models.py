@@ -93,7 +93,8 @@ class User(UserMixin, SurrogatePK, Model):
     last_name = Column(db.String(30), nullable=True)
     active = Column(db.Boolean(), default=False)
     is_admin = Column(db.Boolean(), default=False)
-    sample_id = db.Column(db.String(30), default=get_random_alphaNumeric_string(16), nullable=False)
+    sample_id = db.Column(db.String(30), nullable=False, unique=True)
+    gtid = db.Column(db.String(9), default="900000000", nullable=False)
     # role = reference_col("roles", nullable=True)
     # Role = relationship("Role", backref="users")
     # consent_id = reference_col("consent", nullable=True)
@@ -124,3 +125,24 @@ class User(UserMixin, SurrogatePK, Model):
     def __repr__(self):
         """Represent instance as a unique string."""
         return f"<User({self.username!r})>"
+
+class AuditLog(SurrogatePK, Model):
+    """Audit log for samples"""
+
+    __tablename__ = "log"
+    user_id = reference_col("users", nullable=True)
+    user = relationship("User", backref="log")
+    result_id = reference_col("results", nullable=True)
+    result = relationship("Results", backref="log")
+    ts = Column(db.DateTime, nullable=False, default=roundSeconds(dt.datetime.utcnow()))
+    status = Column(db.String(100), nullable=False)
+
+
+    def __init__(self, user_id, result_id, status, **kwargs):
+        """Create instance."""
+        db.Model.__init__(self, user_id=user_id, result_id=result_id, status=status, **kwargs)
+
+
+    def __repr__(self):
+        """Represent instance as a unique string."""
+        return f"<entry({self.id!r})>"
