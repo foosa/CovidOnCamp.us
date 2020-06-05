@@ -103,7 +103,7 @@
                 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
                 <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript"></script>
                 <input type=submit value="Get tested &raquo;" class="btn btn-success"
-                       onclick="Calendly.initPopupWidget({url: 'https://calendly.com/gt_sarscov2/sample-collection',
+                       onclick="Calendly.initPopupWidget({url: '{{ calendly }}',
                                prefill: {name: '{{ current_user.first_name }}', email: '{{ current_user.email }}', customAnswers: {a1: '{{ resultId }}' } },
                                text: 'Schedule time for sample collection', color: '#00a2ff', textColor: '#ffffff', branding: false});window.opener.location.reload();onbeforeunload = fetchResults();return false;">
             </div>

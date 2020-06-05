@@ -23,7 +23,8 @@ def dashboard():
                            template='dashboard-template',
                            consent=consent,
                            resultId=resultId,
-                           fwd=False
+                           fwd=False,
+                           calendly=current_app.config['CALENDLY_LINK']
                            )
 
 @blueprint.route("/_get_results")
@@ -33,7 +34,8 @@ def _get_results():
     results = Results.query.filter_by(user_id=current_user.id).all()
     return jsonify(data=render_template('users/results.html',
                     template='results-template',
-                    results=results
+                    results=results,
+                    qualtrics=current_app.config['QUALTRICS_LINK']
                     )
                    )
 
@@ -41,7 +43,7 @@ def _get_results():
 @login_required
 def sign():
     """User dashboard."""
-    fwd = "https://powerforms.docusign.net/d1ce1898-d9eb-4bcd-97cf-27be91d11036?env=na3-eu1&acct=7554587e-5afc-4247-8977-071ef5c80e3b&Participant_UserName"
+    fwd = current_app.config['POWERFORM_URL']
     fwd +=f"={current_user.first_name} {current_user.last_name}"
     fwd += f"&Participant_Email={current_user.email}"
     consent = Consent.query.filter_by(user_id=current_user.id).first()

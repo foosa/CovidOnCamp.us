@@ -10,7 +10,6 @@ from environs import Env
 
 env = Env()
 env.read_env()
-# TODO: Abstract calendly URL into an app config item
 ENV = env.str("FLASK_ENV", default="production")
 DEBUG = ENV == "development"
 SQLALCHEMY_DATABASE_URI = env.str("DATABASE_URL")
@@ -29,3 +28,6 @@ MAIL_USERNAME=env.str("MAIL_USERNAME")
 MAIL_PASSWORD=env.str("MAIL_PASSWORD")
 MAIL_ASCII_ATTACHMENTS=True
 UPLOAD_FOLDER=env.str("UPLOAD_FOLDER")
+CALENDLY_LINK=env.str("CALENDLY_LINK")
+POWERFORM_LINK=env.str("POWERFORM_LINK")
+QUALTRICS_LINK=env.str("QUALTRICS_LINK")
