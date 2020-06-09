@@ -17,7 +17,7 @@
 {#                            <th scope="row">{{ result.result_id.split("_")[-1] }}</th>#}
                             <td>{{ result.updated_time }}</td>
                             <td>
-                                <a target="_blank" href="{{ qualtrics }}?fname={{ current_user.first_name }}&lname={{ current_user.last_name }}&email={{ current_user.email }}&rid={{ result.result_id }}">Take survey</a></td>
+                                <a target="_blank" rel="noopener"` href="{{ qualtrics }}?fname={{ current_user.first_name }}&lname={{ current_user.last_name }}&email={{ current_user.email }}&rid={{ result.result_id }}">Take survey</a></td>
                             <td>{% if result.result %}<div>Positive <button type="button" class="btn btn-sm btn-outline-dark" data-toggle="modal" data-target="#shareResult">Alert contacts</button></div>
                             {% elif result.result == False %} {{ "Negative" }}
                             {% else %}

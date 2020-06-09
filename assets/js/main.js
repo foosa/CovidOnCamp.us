@@ -5,6 +5,8 @@
  */
 
 // JavaScript modules
+import $ from 'jquery';
+
 require('@fortawesome/fontawesome-free');
 require('jquery');
 require('popper.js');
@@ -19,3 +21,4 @@ require.context(
 // Your own code
 require('./plugins.js');
 require('./script.js');
+

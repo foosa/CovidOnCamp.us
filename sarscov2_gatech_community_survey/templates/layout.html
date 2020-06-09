@@ -63,7 +63,7 @@
     {% include "footer.html" %}
 
     <!-- JavaScript at the bottom for fast page loading -->
-    <script src="{{ url_for('static', filename='build/main_js.bundle.js') }}"></script>
+    <script src="{{ url_for('static', filename='build/main_js.bundle.js') }}" defer></script>
     {% block js %}{% endblock %}
     <!-- end scripts -->
     {% endblock %}
