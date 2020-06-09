@@ -60,7 +60,6 @@ def load_user_from_request(request):
 def home():
     """Home page."""
     form = LoginForm(request.form)
-    current_app.logger.info("Hello from the home page!")
     total = Results.query.filter(Results.result.isnot(None)).count()
     if total == 0: total = 1
     positive = Results.query.filter_by(result=True).count()

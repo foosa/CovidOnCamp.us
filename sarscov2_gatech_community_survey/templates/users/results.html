@@ -16,27 +16,11 @@
                         <tr>
 {#                            <th scope="row">{{ result.result_id.split("_")[-1] }}</th>#}
                             <td>{{ result.updated_time }}</td>
-                            <td><a target="_blank" href="{{ qualtrics }}?fname={{ current_user.first_name }}&lname={{ current_user.last_name }}&email={{ current_user.email }}&rid={{ result.result_id }}">Take survey</a></td>
+                            <td>
+                                <a target="_blank" href="{{ qualtrics }}?fname={{ current_user.first_name }}&lname={{ current_user.last_name }}&email={{ current_user.email }}&rid={{ result.result_id }}">Take survey</a></td>
                             <td>{% if result.result %}<div>Positive <button type="button" class="btn btn-sm btn-outline-dark" data-toggle="modal" data-target="#shareResult">Alert contacts</button></div>
                             {% elif result.result == False %} {{ "Negative" }}
                             {% else %}
-                                <div class="modal fade" id="barcode_{{ result.result_id.split("_")[-1] }}" role="dialog" >
-                                  <div class="modal-dialog modal-lg">
-                                    <div class="modal-content" >
-                                      <div class="modal-header" >
-                                          <row><button type="button" class="close" data-dismiss="modal">&times;</button></row>
-                                      </div>
-                                      <div class="modal-body">
-                                        <row><h4>Sample barcode</h4></row>
-                                        <p>Present this barcode during sample collection</p>
-                                          <img class="img-fluid"  src="/api/v1/qrcode/{{ result.result_id  }}" style="display:block"/>
-                                      </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
                                 <a class="btn btn-sm btn-outline-dark"  target="_blank" href="/api/v1/qrcode/{{ result.result_id  }}">Get barcode</a>
 {#                                <button type="button" class="btn btn-sm btn-outline-dark" data-toggle="modal" data-target="#barcode_{{ result.result_id.split("_")[-1] }}">Get barcode</button>#}
                             {% endif %}</td>

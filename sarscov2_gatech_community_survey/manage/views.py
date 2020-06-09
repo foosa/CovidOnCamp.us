@@ -48,7 +48,6 @@ def upload():
                 filename = secure_filename(file.filename)
                 file.save(os.path.join(current_app.config['UPLOAD_FOLDER'],request.form['kind'], filename))
                 return redirect(url_for('manage.home'))
-        current_app.logger.info(os.listdir(current_app.config['UPLOAD_FOLDER']))
         return render_template("manage/home.html",
                                files=os.listdir(os.path.join(current_app.config['UPLOAD_FOLDER'], 'consent')))
 
@@ -70,7 +69,6 @@ def update_consents():
                         l = l.rstrip().split(",")
                         add_consent(l[0],l[4])
                 return redirect(url_for('manage.home'))
-        current_app.logger.info(os.listdir(os.path.join(current_app.config['UPLOAD_FOLDER'], 'results')))
         return redirect(url_for('manage.home'))
 
 @blueprint.route('/update_results', methods=['GET'])

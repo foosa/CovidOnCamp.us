@@ -1,18 +1,25 @@
 
 {% extends "layout.html" %}
- {% block header %}
-<link
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css"
-  rel="stylesheet"  type='text/css'>
-{% endblock %}
 {% block content %}
 <!-- Main jumbotron for a primary marketing message or call to action -->
 <div class="jumbotron">
     <div class="container">
 
-      <h1 class="display-5">Welcome to Georgia Tech COVID On Campus Survey</h1>
-       <p>Watch our short introductory video and learn more</p>
-      <p><a href="{{ url_for('public.about') }}" class="btn btn-primary btn-large">About &raquo;</a></p>
+      <h1 class="display-5">Welcome to the Georgia Tech COVID On Campus Survey</h1>
+        <div class="row display-flex">
+            <div class="col-lg-8">
+                <p>In order to help keep our campus community healthy and safe,
+                    we are making it <strong>free and easy for all</strong> members of the Georgia Tech
+                    community -- Students, Staff, and Faculty -- to get tested for
+                    COVID-19.
+                </p>
+                <p>Watch our short introductory video and learn more</p>
+                <p><a href="{{ url_for('public.about') }}" class="btn btn-primary btn-large">About &raquo;</a></p>
+            </div>
+            <div class="col-lg-4">
+
+            </div>
+        </div>
     </div>
 </div><!-- /.jumbotron -->
 
@@ -27,7 +34,7 @@
                 about informed consent, a FAQ, and
                 an animated video explaining the process.
                  </p>
-        <p><a href="{{ url_for('public.about') }}" class="btn btn-outline-secondary">More info</a></p>
+        <p><a href="{{ url_for('public.about') }}" class="btn btn-outline-primary">More info</a></p>
     </div>
     <div class="col-lg-4">
       <h2><i class="fa fa-magic"></i> Testing results</h2>
@@ -59,7 +66,7 @@
         <p>Please click below to access summary results
             which will be updated daily.</p>
 {#        <p><a href="{{ url_for('public.dashboard') }}" class="btn btn-outline-secondary">Explore the data</a></p>#}
-        <p><a href="#" class="btn btn-outline-secondary">Explore the data</a></p>
+        <p><a href="#" class="btn btn-outline-primary">Explore the data</a></p>
     </div>
     <div class="col-lg-4">
       <h2><i class="fa fa-qrcode"></i> Four simple steps</h2>
@@ -69,7 +76,7 @@
           <li>Sign the Consent, and Take the Survey</li>
           <li>Schedule to give a Sample.  We'll send you an email and reminders once you're done.</li>
       </ol>
-      <p><a href="{{ url_for('public.register') }}" class="btn btn-outline-secondary">Join the study</a></p>
+      <p><a href="{{ url_for('public.register') }}" class="btn btn-outline-primary">Join the study</a></p>
     </div>
 {% endblock %}
 

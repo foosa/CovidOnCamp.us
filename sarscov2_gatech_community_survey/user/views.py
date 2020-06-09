@@ -71,10 +71,8 @@ def settings():
     """Update user settings."""
     info = UpdateForm()
     pwd = UpdatePassword()
-    current_app.logger.error(info)
     if info.submit_info.data and info.validate_on_submit():
         user = current_user
-        current_app.logger.error(info.fname.data)
         user.first_name = info.fname.data
         user.last_name = info.lname.data
         user.save()
@@ -82,7 +80,6 @@ def settings():
     if pwd.submit_pwd.data and pwd.validate_on_submit():
         if not current_user.check_password(pwd.oldpwd.value):
             flash('Current password is incorrect', 'danger')
-        current_app.logger.error(pwd.newpwd.value)
         current_user.set_password(pwd.newpwd.data)
         current_user.save()  # update password
         flash('Password updated', 'success')
