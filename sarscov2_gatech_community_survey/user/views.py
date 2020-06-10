@@ -43,7 +43,7 @@ def _get_results():
 @login_required
 def sign():
     """User dashboard."""
-    fwd = current_app.config['POWERFORM_URL']
+    fwd = current_app.config['POWERFORM_LINK']
     fwd +=f"={current_user.first_name} {current_user.last_name}"
     fwd += f"&Participant_Email={current_user.email}"
     consent = Consent.query.filter_by(user_id=current_user.id).first()
