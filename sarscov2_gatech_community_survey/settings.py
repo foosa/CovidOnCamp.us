@@ -12,6 +12,10 @@ env = Env()
 env.read_env()
 ENV = env.str("FLASK_ENV", default="production")
 DEBUG = ENV == "development"
+SESSION_COOKIE_SAMESITE = "Strict"
+if not DEBUG:
+	SESSION_COOKIE_SECURE = True
+	REMEMBER_COOKIE_SECURE = True
 SQLALCHEMY_DATABASE_URI = env.str("DATABASE_URL")
 SECRET_KEY = env.str("SECRET_KEY")
 SEND_FILE_MAX_AGE_DEFAULT = env.int("SEND_FILE_MAX_AGE_DEFAULT")
