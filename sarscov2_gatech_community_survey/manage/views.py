@@ -6,8 +6,9 @@ from werkzeug.utils import secure_filename
 from sarscov2_gatech_community_survey.utils import flash
 from ..api.views import add_consent
 import os
-from sarscov2_gatech_community_survey.manage.forms import barcodeForm, detailsForm
-from sarscov2_gatech_community_survey.user.models import User, Results, Consent, dt, roundSeconds, AuditLog
+from sarscov2_gatech_community_survey.manage.forms import barcodeForm, detailsForm, userInfoForm
+from sarscov2_gatech_community_survey.user.models import User, Results, Consent, dt, roundSeconds, AuditLog, UserInfo
+from sarscov2_gatech_community_survey.utils import flash_errors
 
 blueprint = Blueprint("manage", __name__, url_prefix="/manage/", static_folder="../static")
 
@@ -127,9 +128,42 @@ def details():
                             consent_id=form.consent_id.data,
                             unverified=False
                     )
+            return redirect(url_for('manage.user_info', barcode=barcode))
+        return render_template("manage/details.html",
+                               form=form,
+                               barcode=barcode,
+                               consent_id=consent_id,
+                               user=user)
+
+@blueprint.route('/user_info', methods=['GET', 'POST'])
+@login_required
+def user_info():
+    """List participant details"""
+    form = userInfoForm(request.form)
+    barcode = request.args.get('barcode')
+    user = User.query.filter_by(sample_id=barcode.split("_")[0]).first()
+    info = UserInfo.query.filter_by(user_id=user.id).first()
+    if not info:
+        UserInfo.create(user_id=user.id)
+        info = UserInfo.query.filter_by(user_id=user.id).first()
+
+    if current_user.is_admin:
+        if form.validate_on_submit():
             if user.gtid != form.gtid.data:
                 user.gtid = form.gtid.data
                 user.save()
+            today = dt.date.today()
+            dob = form.dob.data
+            info.update(
+                    commit=True,
+                    age=today.year-dob.year,
+                    dob=dob,
+                    race=form.race.data,
+                    ethnicity=form.ethnicity.data,
+                    address=form.address.data,
+                    zipcode=form.zipcode.data,
+                    county=form.county.data
+                    )
             result = Results.query.filter_by(result_id=barcode).first()
             result.result_text = "Sample received, awaiting processing"
             result.result = None
@@ -142,10 +176,10 @@ def details():
             )
             flash('Added sample for processing', 'success')
             return redirect(url_for('manage.sample'))
-        return render_template("manage/details.html",
+        else:
+            flash_errors(form)
+        return render_template("manage/user_info.html",
                                form=form,
                                barcode=barcode,
-                               consent_id=consent_id,
-                               user=user)
-
-
+                               user=user,
+                               info=info)

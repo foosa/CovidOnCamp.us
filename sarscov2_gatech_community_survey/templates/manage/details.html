@@ -5,7 +5,7 @@
 <div class="container my-5">
   <div class="row justify-content-md-center">
      <div class="col-lg-8">
-      <h2>Participant and sample information</h2>
+      <h2>Sample information</h2>
       <p>Collect and verify participant information</p>
     <form id="details" class="form form-details" method="POST" action="" role="form">
            {{ form.csrf_token }}
@@ -17,20 +17,7 @@
                 {{form.consent_id.label}}
                 {{form.consent_id(placeholder="Consent_id", value=consent_id, class="form-control")}}
           </div>
-          <div class="form-group">
-                {{form.fname.label}}
-                {{form.fname(value=user.first_name, class="form-control")}}
-          </div>
-          <div class="form-group">
-                {{form.lname.label}}
-                {{form.lname(value=user.last_name, class="form-control")}}
-          </div>
-          <div class="form-group">
-                {{form.gtid.label}}
-                {{form.gtid(value=user.gtid, class="form-control")}}
-          </div>
-
-            <p><input class="btn btn-dark pull-left" type="submit" value="Add sample &raquo;"><a class="btn btn-danger pull-right" href="{{ url_for('manage.sample') }}">Cancel <i class="fa fa-close"></i></a></p>
+            <p><input class="btn btn-dark pull-left" type="submit" value="Next &raquo;"><a class="btn btn-danger pull-right" href="{{ url_for('manage.sample') }}">Cancel <i class="fa fa-close"></i></a></p>
     </form>
 
    </div>

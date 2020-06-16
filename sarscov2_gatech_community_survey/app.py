@@ -81,6 +81,7 @@ def create_app(config_object="sarscov2_gatech_community_survey.settings"):
     admin_app.add_view(MyModelView(user.models.Consent, db.session))
     admin_app.add_view(MyModelView(user.models.Role, db.session))
     admin_app.add_view(MyModelView(user.models.AuditLog, db.session))
+    admin_app.add_view(MyModelView(user.models.UserInfo, db.session))
     admin_app.add_view(fileadmin.FileAdmin(app.config['UPLOAD_FOLDER'], name='Files'))
     register_extensions(app)
     register_blueprints(app)

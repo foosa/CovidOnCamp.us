@@ -1,0 +1,56 @@
+
+{% extends "layout.html" %}
+{% block content %}
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="container my-5">
+  <div class="row justify-content-md-center">
+     <div class="col-lg-8">
+      <h2>Participant information</h2>
+      <p>Collect and verify participant information</p>
+    <form id="details" class="form form-details" method="POST" action="" role="form">
+           {{ form.csrf_token }}
+          <div class="form-group">
+                {{form.fname.label}}
+                {{form.fname(placeholder="George", value=user.first_name, class="form-control")}}
+          </div>
+          <div class="form-group">
+                {{form.lname.label}}
+                {{form.lname(placeholder="Burdell", value=user.last_name, class="form-control")}}
+          </div>
+        <div class="form-group">
+                {{form.gtid.label}}
+                {{form.gtid(placeholder="Burdell", value=user.gtid, class="form-control")}}
+          </div>
+        <div class="form-group">
+                {{form.dob.label}}
+                {{form.dob(placeholder="01/01/1995", value=info.dob, class="form-control")}}
+          </div>
+        <div class="form-group">
+                {{form.race.label}}
+                {{form.race(value=info.race, class="form-control")}}
+          </div>
+        <div class="form-group">
+                {{form.ethnicity.label}}
+                {{form.ethnicity(selected=None, value=info.ethnicity, class="form-control")}}
+          </div>
+        <div class="form-group">
+                {{form.address.label}}
+                {{form.address(placeholder="Street address", value=info.address, class="form-control")}}
+          </div>
+        <div class="form-group">
+                {{form.zipcode.label}}
+                {{form.zipcode(placeholder="30332", value=info.zipcode, class="form-control")}}
+          </div>
+        <div class="form-group">
+                {{form.county.label}}
+                {{form.county(placeholder="Fulton", value=info.county, class="form-control")}}
+          </div>
+
+            <p><input class="btn btn-dark pull-left" type="submit" value="Add sample &raquo;"><a class="btn btn-danger pull-right" href="{{ url_for('manage.sample') }}">Cancel <i class="fa fa-close"></i></a></p>
+    </form>
+
+   </div>
+  </div><!-- /.row -->
+</div>
+{% endblock %}
+

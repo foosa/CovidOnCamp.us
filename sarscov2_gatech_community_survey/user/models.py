@@ -131,9 +131,9 @@ class AuditLog(SurrogatePK, Model):
 
     __tablename__ = "log"
     user_id = reference_col("users", nullable=True)
-    user = relationship("User", backref="log")
+    user = relationship("User", backref="user_log")
     result_id = reference_col("results", nullable=True)
-    result = relationship("Results", backref="log")
+    result = relationship("Results", backref="rid_log")
     ts = Column(db.DateTime, nullable=False, default=roundSeconds(dt.datetime.utcnow()))
     status = Column(db.String(100), nullable=False)
 
@@ -146,3 +146,27 @@ class AuditLog(SurrogatePK, Model):
     def __repr__(self):
         """Represent instance as a unique string."""
         return f"<entry({self.id!r})>"
+
+
+class UserInfo(SurrogatePK, Model):
+    """Required demo and personal info for federal and state reporting"""
+
+    __tablename__ = "user_info"
+    user_id = reference_col("users", nullable=False)
+    user = relationship("User", backref="log")
+    age = Column(db.Integer)
+    race = Column(db.String(50))
+    ethnicity = Column(db.String(50))
+    zipcode = Column(db.String(5), default="30332")
+    county = Column(db.String(40), default="Fulton")
+    address = Column(db.String(40))
+    dob = Column(db.Date)
+
+    def __init__(self, user_id, **kwargs):
+        """Create instance."""
+        db.Model.__init__(self, user_id=user_id, **kwargs)
+
+
+    def __repr__(self):
+        """Represent instance as a unique string."""
+        return f"<UI({self.id!r},{self.user_id!r})>"
