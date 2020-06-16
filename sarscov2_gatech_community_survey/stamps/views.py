@@ -27,7 +27,7 @@ def home():
     # to_report = Results.query.filter_by(reported=False).join(User).join(UserInfo).all()
     to_report = db.session.query(Results, User, UserInfo)
     # to_report = to_report.filter(Results.reported == False).filter(Results.user_id == User.id).all()
-    to_report = to_report.filter(Results.user_id == User.id).all()
+    to_report = to_report.filter(Results.user_id == User.id).filter(Results.user_id == UserInfo.user_id).all()
     results = []
     columns = [
             {
@@ -100,7 +100,7 @@ def home():
                 "Last name": report.User.last_name,
                 "Phone": report.User.phone,
                 "GTID": report.User.gtid,
-                "result": report.Results.result,
+                "result": str(report.Results.result),
                 "Patient age": report.UserInfo.age,
                 "Patient race": report.UserInfo.race,
                 "Patient ethnicity": report.UserInfo.ethnicity,
