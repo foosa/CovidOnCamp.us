@@ -8,7 +8,7 @@ import flask_admin as admin
 from flask_admin import helpers, expose
 from flask_admin.contrib import sqla, fileadmin
 import flask_login as login
-from sarscov2_gatech_community_survey import commands, public, user, api, manage
+from sarscov2_gatech_community_survey import commands, public, user, api, manage, stamps
 from sarscov2_gatech_community_survey.user.models import Role
 from sarscov2_gatech_community_survey.extensions import (
     bcrypt,
@@ -113,6 +113,7 @@ def register_blueprints(app):
     app.register_blueprint(user.views.blueprint)
     app.register_blueprint(api.views.blueprint)
     app.register_blueprint(manage.views.blueprint)
+    app.register_blueprint(stamps.views.blueprint)
     return None
 
 

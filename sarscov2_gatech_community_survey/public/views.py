@@ -56,6 +56,8 @@ def load_user_from_request(request):
     # finally, return None if both methods did not login the user
     return None
 
+
+
 @blueprint.route("/", methods=["GET", "POST"])
 def home():
     """Home page."""

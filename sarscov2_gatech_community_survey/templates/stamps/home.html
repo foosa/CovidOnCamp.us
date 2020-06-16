@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+{% block headjs %}
+<script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"></script>
+<link href="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.css" rel="stylesheet">
+
+<script src="https://unpkg.com/tableexport.jquery.plugin/tableExport.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.16.0/dist/extensions/export/bootstrap-table-export.min.js"></script>
+  <style type='text/css'>
+    .row-index {
+      width: 50px;
+      display: inline-block;
+    }
+  </style>
+
+  <script type='text/javascript'>
+    $(window).load(function(){
+      var data = {{data|tojson}};
+      var columns = {{columns|tojson}};
+
+      $(function() {
+        $('#table').bootstrapTable({
+          data: data,
+          columns: columns,
+        });
+
+      });
+
+    });
+  </script>
+{% endblock %}
+
+{% block content %}
+<!-- Main jumbotron for a primary marketing message or call to action -->
+
+<div class="container my-5">
+  <div class="row justify-content-md-center">
+      <body>
+      <div class="container" style="padding: 10px; ">
+          <h1>Survey results</h1>
+          <br/>
+          <div id="toolbar"></div>
+          <table
+                  id="table"
+                  data-toggle="true"
+                  data-toolbar="#toolbar"
+                  data-search="true"
+                  data-show-columns="true"
+                  data-show-export="true"
+                  data-pagination="true"
+                  data-height="500">
+          </table>
+      </div>
+  </div>
+</div>
+{% endblock %}
+

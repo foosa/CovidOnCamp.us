@@ -3,13 +3,13 @@
 from flask import Blueprint, render_template, redirect, url_for, current_app, flash, jsonify
 from flask_login import login_required, current_user
 from .forms import UpdateForm, UpdatePassword
-from sarscov2_gatech_community_survey.user.models import User, Results, Consent
+from sarscov2_gatech_community_survey.user.models import User, Results, Consent, Role
 from sarscov2_gatech_community_survey.extensions import db
 from sarscov2_gatech_community_survey.api.views import add_consent
+from functools import wraps
+
 
 blueprint = Blueprint("user_bp", __name__, url_prefix="/dashboard", static_folder="../static")
-
-
 
 @blueprint.route("/")
 @login_required
