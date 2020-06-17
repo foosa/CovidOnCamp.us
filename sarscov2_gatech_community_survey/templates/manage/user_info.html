@@ -24,14 +24,18 @@
         <div class="form-group">
                 {{form.dob.label}}
                 {{form.dob(placeholder="01/01/1995", value=info.dob, class="form-control")}}
+        </div>
+        <div class="form-group">
+                {{form.sex.label}}
+                {{form.sex(selected=info.sex, class="form-control")}}
           </div>
         <div class="form-group">
                 {{form.race.label}}
-                {{form.race(value=info.race, class="form-control")}}
+                {{form.race(selected=info.race, class="form-control")}}
           </div>
         <div class="form-group">
                 {{form.ethnicity.label}}
-                {{form.ethnicity(selected=None, value=info.ethnicity, class="form-control")}}
+                {{form.ethnicity(selected=info.ethnicity, class="form-control")}}
           </div>
         <div class="form-group">
                 {{form.address.label}}

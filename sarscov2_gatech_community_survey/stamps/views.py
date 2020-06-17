@@ -66,6 +66,11 @@ def home():
                     "sortable" : True,
             },
             {
+                    "field" : "Patient sex",
+                    "title" : "Patient sex",
+                    "sortable" : True,
+            },
+            {
                     "field" : "Patient race",
                     "title" : "Patient race",
                     "sortable" : True,
@@ -102,6 +107,7 @@ def home():
                 "GTID": report.User.gtid,
                 "result": str(report.Results.result),
                 "Patient age": report.UserInfo.age,
+                "Patient sex": report.UserInfo.sex,
                 "Patient race": report.UserInfo.race,
                 "Patient ethnicity": report.UserInfo.ethnicity,
                 "Patient address": report.UserInfo.address,

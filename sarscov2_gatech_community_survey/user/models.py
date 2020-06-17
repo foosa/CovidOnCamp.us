@@ -156,6 +156,7 @@ class UserInfo(SurrogatePK, Model):
     user_id = reference_col("users", nullable=False)
     user = relationship("User", backref="log")
     age = Column(db.Integer)
+    sex = Column(db.String(10))
     race = Column(db.String(50))
     ethnicity = Column(db.String(50))
     zipcode = Column(db.String(5), default="30332")

@@ -45,6 +45,10 @@ class userInfoForm(FlaskForm):
                      ('Native Hawaiian or other Pacific Islander', 'Native Hawaiian or other Pacific Islander'),
                      ('White', 'White')]
     )
+    sex = SelectField(
+            "Sex assigned at birth", validators=[DataRequired()],
+            choices=[('Female','Female'), ('Male','Male')]
+    )
     ethnicity = SelectField(
             "Ethnicity", validators=[DataRequired()],
             choices=[('Hispanic or Latino','Hispanic or Latino'), ('Not Hispanic or Latino','Not Hispanic or Latino')]
