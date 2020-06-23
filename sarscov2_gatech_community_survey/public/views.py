@@ -8,6 +8,7 @@ from flask import (
     render_template,
     request,
     url_for,
+    send_file
 )
 from flask_login import login_required, login_user, logout_user, current_user
 
@@ -80,7 +81,7 @@ def home():
 @blueprint.route("/stats", methods=["GET", "POST"])
 def dashboard():
     """Home page."""
-    return render_template("public/dashboard.html")
+    return send_file("templates/public/dashboard.html")
 
 
 @blueprint.route("/logout/")

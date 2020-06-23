@@ -33,8 +33,37 @@
           $( "#resultsTable" ).replaceWith(data.data)
         }
       );;
+          {% if fwd %}
+
+    window.open("{{ fwd }}")
+
+    {% endif %}
     });
         exponentialBackoff(fetchResults, 10, 2000, 30)})
+
+   function getSchedule() {
+     var rid;
+     fetch('/dashboard/resultid')
+       .then(res => res.text())
+       .then(data => rid = data)
+       .then(() => console.log(rid))
+     .then(() => {
+       Calendly.initPopupWidget({
+         url: '{{ calendly }}',
+         prefill: {
+           name: '{{ current_user.first_name }}',
+           email: '{{ current_user.email }}',
+           customAnswers: { a1: rid }
+         },
+         text: 'Schedule time for sample collection',
+         color: '#00a2ff',
+         textColor: '#ffffff',
+         branding: false
+       });
+       onbeforeunload = fetchResults();
+       return false;
+     })
+   }
     </script>
 {% endblock %}
 
@@ -104,9 +133,7 @@
                 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" media="print" onload="this.media='all'">
                 <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" defer></script>
                 <input type=submit value="Get tested &raquo;" class="btn btn-success"
-                       onclick="Calendly.initPopupWidget({url: '{{ calendly }}',
-                               prefill: {name: '{{ current_user.first_name }}', email: '{{ current_user.email }}', customAnswers: {a1: '{{ resultId }}' } },
-                               text: 'Schedule time for sample collection', color: '#00a2ff', textColor: '#ffffff', branding: false});window.opener.location.reload();onbeforeunload = fetchResults();return false;">
+                       onclick="getSchedule()">
             </div>
             <hr>
             <div class="container">
@@ -116,10 +143,5 @@
             </div>
             </div>
         {% endif %}
-    {% if fwd %}
-    <script>
-    $(document).ready(function () {window.open("{{ fwd }}")})
-    </script>
-    {% endif %}
 
 {% endblock %}

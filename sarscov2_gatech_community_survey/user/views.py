@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """User views."""
-from flask import Blueprint, render_template, redirect, url_for, current_app, flash, jsonify
+from flask import Blueprint, render_template, redirect, url_for, current_app, flash, jsonify, make_response
 from flask_login import login_required, current_user
 from .forms import UpdateForm, UpdatePassword
 from sarscov2_gatech_community_survey.user.models import User, Results, Consent, Role
@@ -26,6 +26,15 @@ def dashboard():
                            fwd=False,
                            calendly=current_app.config['CALENDLY_LINK']
                            )
+
+@blueprint.route("/resultid")
+@login_required
+def resultid():
+    """User dashboard."""
+    result_num = Results.query.filter_by(user_id=current_user.id).count() + 1
+    resultId = f"{current_user.sample_id}_{result_num}"
+    return make_response(resultId, 200)
+
 
 @blueprint.route("/_get_results")
 @login_required
@@ -55,13 +64,12 @@ def sign():
     else:
         Consent.create(user_id=current_user.id, consented=False, unverified=True, consent_id=None)
     consent = Consent.query.filter_by(user_id=current_user.id).first()
-    return render_template('users/dashboard.jinja2',
-                           title='COV2 dashboard',
-                           template='dashboard-template',
+    return redirect(url_for('users_bp.dashboard',
                            consent=consent,
                            resultId=resultId,
-                           fwd=fwd
-                           )
+                           fwd=fwd)
+
+    )
 
 
 
