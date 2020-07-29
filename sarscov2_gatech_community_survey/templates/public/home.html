@@ -13,8 +13,14 @@
                     community -- Students, Staff, and Faculty -- to get tested for
                     COVID-19.
                 </p>
+                <p>
+                    Please create your account and sign in above, read the Consent, and
+                    then register your sample using one of the two options below.
+                    Return to the registration page the day after you donate your sample,
+                    to see your results.
+                </p>
                 <p>Watch our short introductory video and learn more</p>
-                <p><a href="{{ url_for('public.about') }}" class="btn btn-primary btn-large">About &raquo;</a></p>
+                <p><a href="{{ url_for('public.about') }}" class="btn btn-primary btn-large">FAQ &raquo;</a></p>
             </div>
             <div class="col-lg-4">
 
@@ -27,18 +33,29 @@
 <div class="container" id="info">
   <div class="row display-flex">
     <div class="col-lg-4">
-      <h2><i class="fa fa-medkit"></i> COVID-19 screening</h2>
-        <p>For more information on campus policies
-                regarding SARS-CoV-2 testing, please
-                follow this link.  It includes information
-                about informed consent, a FAQ, and
-                an animated video explaining the process.
+      <h2><i class="fa fa-medkit"></i> Sample Using a Kit on Your Own</h2>
+        <p>Register here if you have been given a kit to provide a
+            saliva sample in, either at your on-campus residence or
+            place of work.  You will need to sign the consent,
+            enter the barcode on the sample vial, and fill in our
+            Qualtrics survey.
                  </p>
-        <p><a href="{{ url_for('public.about') }}" class="btn btn-outline-primary">More info</a></p>
+        <p><a href="{{ url_for('public.register') }}" class="btn btn-outline-primary">Register your tube</a></p>
     </div>
     <div class="col-lg-4">
-      <h2><i class="fa fa-magic"></i> Testing results</h2>
-                   <style type="text/css">
+        <h2><i class="fa fa-qrcode"></i> Sign up to get tested</h2>
+        <p>
+            Register here if you intend to visit a testing location on
+            campus to donate your sample in person.  You will need to
+            sign the consent, apply for an appointment time, and fill
+            in our Qualtrics survey.  We’ll send you an email reminder
+            once you’re done.
+        </p>
+        <p><a href="{{ url_for('public.register') }}" class="btn btn-outline-primary">Join the study</a></p>
+    </div>
+    <div class="col-lg-4">
+        <h2><i class="fa fa-magic"></i> Testing results</h2>
+        <style type="text/css">
 .tg  {border-collapse:collapse;border-color:#ccc;border-spacing:0;border-style:solid;border-width:1px; width:100%}
 .tg td{background-color:#fff;border-color:#ccc;border-style:solid;border-width:0px;color:#333;
   font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;word-break:normal}
@@ -47,7 +64,7 @@
 .tg .tg-y6me{background-color:#212529;color:#efefef;text-align:left;vertical-align:top}
 .tg .tg-0lax{text-align:center;vertical-align:top; width:30%}
 </style>
-<table class="tg">
+        <table class="tg">
 <tbody>
   <tr>
     <td class="tg-y6me">Total tests administered</td>
@@ -65,18 +82,8 @@
 </table>
         <p>Please click below to access summary results
             which will be updated daily.</p>
-{#        <p><a href="{{ url_for('public.dashboard') }}" class="btn btn-outline-secondary">Explore the data</a></p>#}
-        <p><a href="#" class="btn btn-outline-primary">Explore the data</a></p>
-    </div>
-    <div class="col-lg-4">
-      <h2><i class="fa fa-qrcode"></i> Four simple steps</h2>
-      <ol>
-          <li>Read over our <a href="/static/SARS-Cov2_Consent_form.pdf" target="_blank">Informed Consent Document</a></li>
-          <li><a href="{{ url_for('public.register') }}">Register</a> for the Surveillance Program</li>
-          <li>Sign the Consent, and Take the Survey</li>
-          <li>Schedule to give a Sample.  We'll send you an email and reminders once you're done.</li>
-      </ol>
-      <p><a href="{{ url_for('public.register') }}" class="btn btn-outline-primary">Join the study</a></p>
+        <p><a href="{{ url_for('public.dashboard') }}" class="btn btn-outline-primary">Explore the data</a></p>
+        {#        <p><a href="#" class="btn btn-outline-primary">Explore the data</a></p>#}
     </div>
 {% endblock %}
 

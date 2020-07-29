@@ -50,7 +50,9 @@ class Results(SurrogatePK, Model):
     result_id = Column(db.String(200), nullable=True, default=None)
     result = Column(db.Boolean, nullable=True, default=None)
     result_text = Column(db.String(500), nullable=True, default="Sample pending")
-    reported = Column(db.Boolean, default=True, nullable=True)
+    reported = Column(db.Boolean, default=False, nullable=True)
+    tube_id = Column(db.String(10), default=None, nullable=True)
+    survey = Column(db.Boolean, default=False, nullable=True)
     def __init__(self, user_id, result_id, **kwargs):
         """Create instance."""
         db.Model.__init__(self, user_id=user_id, result_id=result_id, **kwargs)

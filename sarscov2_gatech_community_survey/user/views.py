@@ -2,8 +2,11 @@
 """User views."""
 from flask import Blueprint, render_template, redirect, url_for, current_app, flash, jsonify, make_response
 from flask_login import login_required, current_user
-from .forms import UpdateForm, UpdatePassword
+from .forms import UpdateForm, UpdatePassword, addTubeForm
 from sarscov2_gatech_community_survey.user.models import User, Results, Consent, Role
+from sarscov2_gatech_community_survey.utils import flash_errors
+from sarscov2_gatech_community_survey.api.views import roundSeconds
+import datetime as dt
 from sarscov2_gatech_community_survey.extensions import db
 from sarscov2_gatech_community_survey.api.views import add_consent
 from functools import wraps
@@ -11,7 +14,7 @@ from functools import wraps
 
 blueprint = Blueprint("user_bp", __name__, url_prefix="/dashboard", static_folder="../static")
 
-@blueprint.route("/")
+@blueprint.route("/", methods=['GET'])
 @login_required
 def dashboard():
     """User dashboard."""
@@ -64,12 +67,14 @@ def sign():
     else:
         Consent.create(user_id=current_user.id, consented=False, unverified=True, consent_id=None)
     consent = Consent.query.filter_by(user_id=current_user.id).first()
-    return redirect(url_for('users_bp.dashboard',
+    return render_template('users/dashboard.jinja2',
+                           title='COV2 dashboard',
+                           template='dashboard-template',
                            consent=consent,
                            resultId=resultId,
-                           fwd=fwd)
-
-    )
+                           fwd=fwd,
+                           calendly=current_app.config['CALENDLY_LINK']
+                           )
 
 
 
@@ -100,5 +105,19 @@ def settings():
                            body="Update user account.")
 
 
+@blueprint.route('/add', methods=['GET', 'POST'])
+@login_required
+def add_tube():
+    form = addTubeForm()
+    if form.validate_on_submit():
+        result_num = Results.query.filter_by(user_id=current_user.id).count() + 1
+        resultId = f"{current_user.sample_id}_{result_num}"
+        Results.create(user_id=current_user.id,result_id=resultId, tube_id=form.tubeid.data, updated_time=roundSeconds(dt.datetime.now()))
+        return redirect(url_for('user_bp.dashboard'))
+    else:
+        flash_errors(form)
+    return render_template('users/add_tube.html',
+                           title="Associated Tube ID with account",
+                           form=form)
 
 

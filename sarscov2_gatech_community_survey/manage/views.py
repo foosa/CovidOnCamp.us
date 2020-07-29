@@ -109,10 +109,13 @@ def details():
     user = User.query.filter_by(sample_id=barcode.split("_")[0]).first()
     consent_id = ''
     consent = Consent.query.filter_by(user_id=user.id).first()
+    result = Results.query.filter_by(result_id=barcode).first()
     if consent and consent.consent_id != "No consent id available":
         consent_id = consent.consent_id
     if current_user.is_admin:
         if form.validate_on_submit():
+            result.tube_id = form.tubeid.data
+            result.save()
             if form.consent_id.data != consent_id:
                 if consent:
                     if consent.consent_id == "No consent id available" or consent.consent_id == None:
@@ -133,20 +136,27 @@ def details():
                                form=form,
                                barcode=barcode,
                                consent_id=consent_id,
+                               tubeid=result.tube_id,
                                user=user)
 
 @blueprint.route('/user_info', methods=['GET', 'POST'])
 @login_required
 def user_info():
     """List participant details"""
-    form = userInfoForm(request.form)
+
     barcode = request.args.get('barcode')
     user = User.query.filter_by(sample_id=barcode.split("_")[0]).first()
     info = UserInfo.query.filter_by(user_id=user.id).first()
     if not info:
         UserInfo.create(user_id=user.id)
         info = UserInfo.query.filter_by(user_id=user.id).first()
-
+        form = userInfoForm(request.form)
+    else:
+        form = userInfoForm(request.form)
+        # form.sex = info.sex
+        # form.race = info.race
+        # form.ethnicity = info.ethnicity
+        # form.process()
     if current_user.is_admin:
         if form.validate_on_submit():
             if user.gtid != form.gtid.data:
@@ -157,12 +167,13 @@ def user_info():
             info.update(
                     commit=True,
                     age=today.year-dob.year,
-                    dob=dob,
-                    race=form.race.data,
-                    ethnicity=form.ethnicity.data,
-                    address=form.address.data,
-                    zipcode=form.zipcode.data,
-                    county=form.county.data
+                    # sex=form.sex.data,
+                    dob=dob
+                    # race=form.race.data,
+                    # ethnicity=form.ethnicity.data,
+                    # address=form.address.data,
+                    # zipcode=form.zipcode.data,
+                    # county=form.county.data
                     )
             result = Results.query.filter_by(result_id=barcode).first()
             result.result_text = "Sample received, awaiting processing"
@@ -172,7 +183,7 @@ def user_info():
             AuditLog.create(
                     user_id=user.id,
                     result_id=result.id,
-                    status="Specimen received"
+                    status=f"Specimen received, in tube {result.tube_id}"
             )
             flash('Added sample for processing', 'success')
             return redirect(url_for('manage.sample'))
@@ -183,3 +194,12 @@ def user_info():
                                barcode=barcode,
                                user=user,
                                info=info)
+
+
+# @blueprint.route('/generate', methods=['GET', 'POST'])
+# @login_required
+# def user_info():
+#     """Generate barcodes"""
+#     if current_user.is_admin:
+#         form = generateForm()
+#         if form.validate_on_submit():

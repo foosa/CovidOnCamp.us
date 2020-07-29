@@ -91,49 +91,100 @@
                         </div>
                       </div>
                     </div>
+
             <p>Participant name: {{ '{} {}'.format(current_user.first_name, current_user.last_name) }}</p>
             {% if consent.consented %}
-            <div>
-                    Directions:
-                    <ol>
-                        <li>Schedule a test with the "Get tested" button</li>
-                        <li>Fill out the survey associated with your test</li>
-                        <li>On the day of your test, bring your Buzzcard and phone</li>
-                        <small>You will present your Buzzcard along with the test barcode accessed from this page</small>
-                    </ol>
-                </div>
+                <div class="card-deck mb-3 text-center">
+
+
+<div class="container">
+  <div class="card-deck mb-3 text-center">
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header">
+        <h4 class="my-0 font-weight-normal">Sample Using a Kit on Your Own</h4>
+      </div>
+      <div class="card-body">
+        <ol class="mt-3 mb-4">
+            <li>Link your tube ID using the button below. </li>
+            <li>Take the Survey that becomes available.</li>
+            <li>Come back tomorrow to access your results.</li>
+        </ol>
+          <a class="btn btn-lg btn-block btn-primary" href="/dashboard/add">Link tube ID &raquo;</a>
+      </div>
+    </div>
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header">
+        <h4 class="my-0 font-weight-normal">Schedule a test</h4>
+      </div>
+      <div class="card-body">
+{#        <ul class="list-unstyled mt-3 mb-4">#}
+        <ol>
+            <li>Schedule a test with the button below.</li>
+            <li>Take the Survey that becomes available.</li>
+            <li>On the day of your test, bring your Buzzcard and phone.</li>
+            <small>You will present your Buzzcard along with the test barcode from this page</small>
+        </ol>
+        <input type=submit value="Schedule a test &raquo;" class="btn btn-warning btn-lg btn-block"
+                       onclick="getSchedule()">
+      </div>
+    </div>
+  </div>
             {% elif consent.unverified %}
-                <div>
-                    Directions:
-                    <ol>
-                        <li>Schedule a test with the "Get tested" button</li>
-                        <li>Fill out the survey associated with your test</li>
-                        <li>On the day of your test, bring your Buzzcard and phone</li>
-                        <small>You will present your Buzzcard along with the test barcode accessed from this page</small>
-                    </ol>
-                </div>
                 <small id="consentHelp" class="form-text text-muted">Our staff will verify your consent during your first test, no need to submit more than once.</small>
                 <small id="retake" class="form-text text-muted">If you didn't receive an email from DocuSign with your copy of the signed consent form, <a target="_blank" href="https://powerforms.docusign.net/d1ce1898-d9eb-4bcd-97cf-27be91d11036?env=na3-eu1&acct=7554587e-5afc-4247-8977-071ef5c80e3b&Participant_UserName={{ '{} {}'.format(current_user.first_name, current_user.last_name) }}&Participant_Email={{ current_user.email }}">resubmit your consent here</a>.</small>
+                <div class="card-deck mb-3 text-center">
+
+
+<div class="container">
+  <div class="card-deck mb-3 text-center">
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header">
+        <h4 class="my-0 font-weight-normal">Sample Using a Kit on Your Own</h4>
+      </div>
+      <div class="card-body">
+        <ol class="mt-3 mb-4">
+            <li><a href="/dashboard/sign">Sign the Consent</a> on DocuSign (you can <a href="/static/COVID-19 Diagnostic Testing Consent Form.pdf" target="_blank">read it here first</a>)</li>
+            <li>Link your tube ID using the button below. </li>
+            <li>Take the Survey that becomes available.</li>
+            <li>Come back tomorrow to access your results.</li>
+        </ol>
+          <a class="btn btn-lg btn-block btn-primary" href="/dashboard/add">Link tube ID &raquo;</a>
+      </div>
+    </div>
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header">
+        <h4 class="my-0 font-weight-normal">Schedule a test</h4>
+      </div>
+      <div class="card-body">
+{#        <ul class="list-unstyled mt-3 mb-4">#}
+        <ol>
+            <li><a href="/dashboard/sign">Sign the Consent</a> on DocuSign (you can <a href="/static/COVID-19 Diagnostic Testing Consent Form.pdf" target="_blank">read it here first</a>)</li>
+            <li>Schedule a test with the "Get tested" button</li>
+            <li>Fill out the survey associated with your test</li>
+            <li>On the day of your test, bring your Buzzcard and phone</li>
+            <small>You will present your Buzzcard along with the test barcode from this page</small>
+        </ol>
+        <input type=submit value="Schedule a test &raquo;" class="btn btn-warning btn-lg btn-block"
+                       onclick="getSchedule()">
+      </div>
+    </div>
+  </div>
             {% else %}
+{#                <button name="consent" type="submit" class="btn btn-primary active" method="post" value="sign">Sign the consent</button>#}
                 <a class="btn btn-primary active"
                    href="/dashboard/sign">Sign the consent</a>
                 <small id="consentHelp" class="form-text text-muted">Our staff will verify your consent during your first test, no need to submit more than once.</small>
-                <div>
-                    Directions:
-                    <ol>
-                        <li><a href="/dashboard/sign">Sign the Consent</a> (you can <a href="/static/SARS-Cov2_Consent_form.pdf" target="_blank">read it here first</a> if you have not done so already)</li>
-                        <li>Schedule a test with the "Get tested" button</li>
-                        <li>Fill out the survey associated with your test</li>
-                        <li>On the day of your test, bring your Buzzcard and phone</li>
-                        <small>You will present your Buzzcard along with the test barcode accessed from this page</small>
-                    </ol>
-                </div>
+
             {% endif %}
+            <div class="container">
+
+
 
                 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" media="print" onload="this.media='all'">
                 <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" defer></script>
-                <input type=submit value="Get tested &raquo;" class="btn btn-success"
-                       onclick="getSchedule()">
+
+{#            <a class="btn btn-primary active" href="/dashboard/add">Link tube ID &raquo;</a>#}
+
             </div>
             <hr>
             <div class="container">

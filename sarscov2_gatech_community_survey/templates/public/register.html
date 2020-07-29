@@ -37,6 +37,14 @@
                 {{form.confirm.label}}
                 {{form.confirm(placeholder="Password (again)", class_="form-control")}}
             </div>
+        <div class="form-group">
+                {{form.tubeid.label}} (Optional)
+                {{form.tubeid(placeholder="Tube ID for survey participants", class_="form-control")}}
+        </div>
+        <div class="form-group">
+                {{form.tubeid_confirm.label}}
+                {{form.tubeid_confirm(placeholder="Tube ID (again)", class_="form-control")}}
+            </div>
             <p><input class="btn btn-primary" type="submit" value="Register"></p>
     </form>
     <p><em>Already registered?</em> Click <a href="/">here</a> to login.</p>

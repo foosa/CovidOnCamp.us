@@ -4,7 +4,7 @@ from flask_wtf import FlaskForm
 from wtforms import PasswordField, StringField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, Optional, ValidationError
 import phonenumbers
-from .models import User
+from .models import User, Results
 
 
 class RegisterForm(FlaskForm):
@@ -31,6 +31,13 @@ class RegisterForm(FlaskForm):
     confirm = PasswordField(
         "Verify password",
         [DataRequired(), EqualTo("password", message="Passwords must match")],
+    )
+    tubeid = StringField(
+        "Tube ID", validators=[Optional(), Length(min=6, max=40)]
+    )
+    tubeid_confirm = StringField(
+        "Confirm Tube ID",
+        [EqualTo("tubeid", message="Tube ID's must match")],
     )
 
     def __init__(self, *args, **kwargs):
@@ -62,6 +69,10 @@ class RegisterForm(FlaskForm):
                 return False
         except (phonenumbers.phonenumberutil.NumberParseException, ValueError):
             self.phone.errors.append("Not a valid phone number")
+            return False
+        result = Results.query.filter_by(tube_id=self.tubeid.data).first()
+        if self.tubeid.data and result:
+            self.tubeid.errors.append("Tube ID has already been registered")
             return False
         return True
 
@@ -105,3 +116,19 @@ class UpdatePassword(UpdateForm):
                             validators=[DataRequired(),
                                         EqualTo('newpwd', message='Passwords must match.')])
     submit_pwd = SubmitField('Update password')
+
+class addTubeForm(FlaskForm):
+    """Associated TubeID with user from dashboard"""
+    tubeid = StringField("Tube ID", validators=[DataRequired(), Length(min=8, max=8, message="Tube IDs are 8 characters long")])
+    tubeid_confirm = StringField("Confirm Tube ID", validators=[DataRequired(), EqualTo("tubeid", message="Tube IDs must match")])
+
+    def validate(self):
+        """Validate the form."""
+        initial_validation = super(addTubeForm, self).validate()
+        if not initial_validation:
+            return False
+        result = Results.query.filter_by(tube_id=self.tubeid.data).first()
+        if self.tubeid.data and result:
+            self.tubeid.errors.append("Tube ID has already been registered")
+            return False
+        return True

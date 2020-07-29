@@ -18,7 +18,8 @@ from sarscov2_gatech_community_survey.user.forms import RegisterForm
 from sarscov2_gatech_community_survey.user.models import User, Results
 from sarscov2_gatech_community_survey.utils import flash_errors, get_random_alphaNumeric_string
 from sarscov2_gatech_community_survey.api.views import send_welcome, reset_pwd
-
+from sarscov2_gatech_community_survey.api.views import roundSeconds
+import datetime as dt
 blueprint = Blueprint("public", __name__, static_folder="../static")
 
 
@@ -119,7 +120,11 @@ def register():
         send_welcome(form.email.data, form.fname.data, form.lname.data)
         user = User.query.filter_by(email=form.email.data).first()
         login_user(user)
-        return redirect(url_for("user_bp.dashboard"))
+        result_num = Results.query.filter_by(user_id=user.id).count() + 1
+        resultId = f"{user.sample_id}_{result_num}"
+        Results.create(user_id=user.id, result_id=resultId, tube_id=form.tubeid.data,
+                       updated_time=roundSeconds(dt.datetime.now()))
+        return redirect(url_for('user_bp.dashboard'))
     else:
         flash_errors(form)
     return render_template("public/register.html", form=form)

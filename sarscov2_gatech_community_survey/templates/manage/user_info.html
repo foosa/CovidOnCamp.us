@@ -25,30 +25,30 @@
                 {{form.dob.label}}
                 {{form.dob(placeholder="01/01/1995", value=info.dob, class="form-control")}}
         </div>
-        <div class="form-group">
-                {{form.sex.label}}
-                {{form.sex(selected=info.sex, class="form-control")}}
-          </div>
-        <div class="form-group">
-                {{form.race.label}}
-                {{form.race(selected=info.race, class="form-control")}}
-          </div>
-        <div class="form-group">
-                {{form.ethnicity.label}}
-                {{form.ethnicity(selected=info.ethnicity, class="form-control")}}
-          </div>
-        <div class="form-group">
-                {{form.address.label}}
-                {{form.address(placeholder="Street address", value=info.address, class="form-control")}}
-          </div>
-        <div class="form-group">
-                {{form.zipcode.label}}
-                {{form.zipcode(placeholder="30332", value=info.zipcode, class="form-control")}}
-          </div>
-        <div class="form-group">
-                {{form.county.label}}
-                {{form.county(placeholder="Fulton", value=info.county, class="form-control")}}
-          </div>
+{#        <div class="form-group">#}
+{#                {{form.sex.label}}#}
+{#                {{form.sex(selected=info.sex, class="form-control")}}#}
+{#          </div>#}
+{#        <div class="form-group">#}
+{#                {{form.race.label}}#}
+{#                {{form.race(selected=info.race, class="form-control")}}#}
+{#          </div>#}
+{#        <div class="form-group">#}
+{#                {{form.ethnicity.label}}#}
+{#                {{form.ethnicity(selected=info.ethnicity, class="form-control")}}#}
+{#          </div>#}
+{#        <div class="form-group">#}
+{#                {{form.address.label}}#}
+{#                {{form.address(placeholder="Street address", value=info.address, class="form-control")}}#}
+{#          </div>#}
+{#        <div class="form-group">#}
+{#                {{form.zipcode.label}}#}
+{#                {{form.zipcode(placeholder="30332", value=info.zipcode, class="form-control")}}#}
+{#          </div>#}
+{#        <div class="form-group">#}
+{#                {{form.county.label}}#}
+{#                {{form.county(placeholder="Fulton", value=info.county, class="form-control")}}#}
+{#          </div>#}
 
             <p><input class="btn btn-dark pull-left" type="submit" value="Add sample &raquo;"><a class="btn btn-danger pull-right" href="{{ url_for('manage.sample') }}">Cancel <i class="fa fa-close"></i></a></p>
     </form>
